@@ -42,10 +42,10 @@ class DriveRun:
             predict = self.net_model.model.predict(np_img)
         # calc scaled steering angle
         steering_angle = predict[0][0]
-        throttle = predict[0][1]
+        # throttle = predict[0][1]
         steering_angle /= Config.neural_net['steering_angle_scale']
-        throttle /= Config.neural_net['throttle_scale']
-        predict[0][0] = steering_angle
-        predict[0][1] = throttle
+        # throttle /= Config.neural_net['throttle_scale']
+        # predict[0][0] = steering_angle
+        # predict[0][1] = throttle
 
-        return predict
+        return steering_angle

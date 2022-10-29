@@ -3,7 +3,7 @@
 """
 Created on Sat Sep 23 13:23:14 2017
 History:
-11/28/2020: modified for OSCAR 
+10/10/2022: modified for OSCAR 
 
 @author: jaerock
 """
@@ -29,12 +29,12 @@ from config import Config
 import config 
 
 config = Config.data_collection
-if config['vehicle_name'] == 'fusion':
-    from fusion.msg import Control
-elif config['vehicle_name'] == 'rover':
-    from rover.msg import Control
-else:
-    exit(config['vehicle_name'] + 'not supported vehicle.')
+# if config['vehicle_name'] == 'fusion':
+#     from fusion.msg import Control
+# elif config['vehicle_name'] == 'rover':
+#     from rover.msg import Control
+# else:
+#     exit(config['vehicle_name'] + 'not supported vehicle.')
 
 
 class DataCollection():
@@ -85,9 +85,11 @@ class DataCollection():
         return math.sqrt(x**2 + y**2 + z**2)
 
     def steering_throttle_cb(self, value):
-        self.throttle = value.throttle
-        self.steering = value.steer
-        self.brake = value.brake
+        self.throttle = value.linear.x 
+        self.steering = value.angular.z
+        # self.throttle = value.throttle
+        # self.steering = value.steer
+        #self.brake = value.brake
         
     def pos_vel_cb(self, value):
         self.pos_x = value.pose.pose.position.x 
@@ -125,20 +127,21 @@ class DataCollection():
             cv2.imwrite(file_full_path, img)
         sys.stdout.write(file_full_path + '\r')
         # self.delta_str = self.steering - prev_str
-        line = "{}{},{},{},{},{},{},{},{},{},{},{},{},{},{}\r\n".format(time_stamp, const.IMAGE_EXT, 
-                                                    self.steering, 
-                                                    self.throttle,
-                                                    self.brake,
-                                                    unix_time,
-                                                    self.vel,
-                                                    self.vel_x,
-                                                    self.vel_y,
-                                                    self.vel_z,
-                                                    self.accel_x,
-                                                    self.accel_y,
-                                                    self.pos_x,
-                                                    self.pos_y,
-                                                    self.pos_z)
+        line = "{}{},{}\r\n".format(time_stamp, const.IMAGE_EXT, self.steering)   
+        # line = "{}{},{},{},{},{},{},{},{},{},{},{},{},{},{}\r\n".format(time_stamp, const.IMAGE_EXT, 
+                                                    # self.steering, 
+                                                    # self.throttle,
+                                                    # self.brake,
+                                                    # unix_time,
+                                                    # self.vel,
+                                                    # self.vel_x,
+                                                    # self.vel_y,
+                                                    # self.vel_z,
+                                                    # self.accel_x,
+                                                    # self.accel_y,
+                                                    # self.pos_x,
+                                                    # self.pos_y,
+                                                    # self.pos_z)
         self.text.write(line)
 
 
@@ -146,7 +149,8 @@ def main():
     dc = DataCollection()
 
     rospy.init_node('data_collection')
-    rospy.Subscriber(config['vehicle_control_topic'], Control, dc.steering_throttle_cb)
+    rospy.Subscriber('/cmd_vel', Twist, dc.steering_throttle_cb)
+    # rospy.Subscriber(config['/cmd_vel'], Twist, dc.steering_throttle_cb)
     rospy.Subscriber(config['base_pose_topic'], Odometry, dc.pos_vel_cb)
     rospy.Subscriber(config['camera_image_topic'], Image, dc.recorder_cb)
     rospy.Subscriber(config['imu'], Imu, dc.imu_cb)

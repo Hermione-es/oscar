@@ -143,7 +143,7 @@ class DriveTrain:
                                     (config['input_image_width'],
                                     config['input_image_height']))
                 image = self.image_process.process(image)
-                # cv2.imwrite('/home/kdh/oscar/oscar/e2e_fusion_data/test/aug/'+image_name, image)
+                # cv2.imwrite('/home/eunseo/aug/'+image_name, image)
                 # if data == 'train':
                 #     cv2.imwrite('/mnt/Data/oscar/train_data/'+image_name, image)
                 # print(image.shape)
@@ -152,8 +152,8 @@ class DriveTrain:
                 # if no brake data in collected data, brake values are dummy
                 steering_angle = measurement
                 
-                if abs(steering_angle) < config['steering_angle_jitter_tolerance']:
-                    steering_angle = 0
+                # if abs(steering_angle) < config['steering_angle_jitter_tolerance']:
+                #     steering_angle = 0
 
                 measurements.append(steering_angle*config['steering_angle_scale'])
                 

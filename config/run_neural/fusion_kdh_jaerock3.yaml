@@ -26,4 +26,4 @@ lstm_dataterm : 1
 
 # scale factors
 scale_factor_throttle: 1
-scale_factor_steering: 1
+scale_factor_steering: 5
