@@ -6,7 +6,7 @@ pwd
 ```
 를 입력하여 설치하는 위치를 잘 기억해둔 다음 아래 명령어 실행.
 ```sh
-git clone https://github.com/ICSL-Capstone/oscar --recursive
+git clone https://github.com/Hermione-es/oscar --recursive
 ```
 <br>
 
@@ -19,6 +19,11 @@ conda env create --file config/conda/environment.yaml
 설치 후 아래 명령어를 실행하여 가상환경으로 전환
 ```sh
 conda activate oscar
+```
+oscar 폴더 이동 후 setup
+```sh
+cd oscar
+. setup.bash
 ```
 
 <br>
@@ -43,7 +48,7 @@ csv 파일의 경로는
 
 이때 아래와 같이 csv가 들어있는 폴더 경로를 입력해주면 됨.  
 ```sh
-python neural_net/train.py /home/icsl/dataset/2021-05-18-15-25-54
+python neural_net/train.py /home/icsl/Desktop/1/1n/2021-05-18-15-25-54
 ```
 
 ### #주의#
@@ -60,7 +65,7 @@ cd oscar_레포지토리가_설치된_경로
 ```
 ex)
 ```sh
-cd /home/kdh/oscar
+cd /home/icsl/oscar
 ```
 
 
@@ -90,14 +95,9 @@ csv 파일의 경로는
 
 
 
-이때 아래와 같이 "모델 weight 파일의 경로"와 "테스트 데이터셋의 csv가 들어있는 폴더 경로"를 입력해주면 됨.  
+이때 아래와 같이 "모델 weight 파일의 경로"를 입력해주면 됨.  
 ```sh
-python neural_net/drive_log.py /home/icsl/dataset/2021-05-18-15-25-54_fusion_kdh_jaerock3_N1 /home/icsl/dataset/2021-05-17-22-20-35
-```
-
-모델 weight 파일의 경로의 경우는  
-*/home/icsl/dataset/*  
-이지만, 위 명령어처럼 **확장자를 제외한 weight 파일의 이름**도 추가로 작성하여야함.
+rosrun run_neural run_neural.py /home/icsl/Desktop/1/1n/2021-05-18-15-25-54_fusion_kdh_jaerock3_N1 
 
 해당 명령어를 실행하면 모델을 분석한 결과이미지들이 아래와 같은 형식의 파일명으로 생성됨.  
 *2021-05-17-22-20-35_N1_OOOOOOOO.png*  

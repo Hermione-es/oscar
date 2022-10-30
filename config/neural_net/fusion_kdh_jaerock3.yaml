@@ -37,7 +37,7 @@ early_stopping_patience: 15 #오차가 일정 이상 내려가지 않고 반복�
 tensorboard_log_dir: logs/scalars/
 
 # data augmentation
-data_aug_flip: False
+data_aug_flip: True
 data_aug_bright: False
 data_aug_shift: False
 # input image size to the neural network
